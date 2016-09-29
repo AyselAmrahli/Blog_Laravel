@@ -8,6 +8,6 @@ class Tag extends Model
 {
     //relation with posts /ManyToMany/
     public function posts(){
-      return $this->belongsToMany('App\Tag');
+      return $this->belongsToMany('App\Post');
     }
 }

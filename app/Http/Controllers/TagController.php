@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Tag;
+use App\Post;
 use Session;
 
 class TagController extends Controller
@@ -55,7 +56,9 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        //
+        $tag = Tag::find($id);
+
+        return view('tags.show')->withTag($tag);
     }
 
     /**
@@ -66,7 +69,8 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tag = Tag::find($id);
+        return view('tags.edit')->withTag($tag);
     }
 
     /**
@@ -78,7 +82,19 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $tag = Tag::find($id);
+      $this->validate($request,[
+       'name'=>'required|max:255'
+      ]);
+
+      $tag->name = $request->name;
+
+      $tag->update();
+
+      Session::flash('success','Tag updated successfully');
+
+      return redirect()->route('tags.index');
+
     }
 
     /**
