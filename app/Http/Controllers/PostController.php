@@ -165,6 +165,7 @@ class PostController extends Controller
         $post = Post::find($id);
 
         //delete data from database
+        $post->tags()->detach();
         $post->delete();
 
         //set flash message
